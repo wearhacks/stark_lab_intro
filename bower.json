@@ -1,0 +1,19 @@
+{
+  "name": "stark_intro",
+  "version": "0.0.0",
+  "authors": [
+    "nadim <i.nadim@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace": "~1.2.3",
+    "ace-builds": "~1.2.3"
+  }
+}

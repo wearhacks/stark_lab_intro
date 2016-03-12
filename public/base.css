@@ -1,0 +1,500 @@
+body {
+    background: #fafafa!important
+  }
+  h1.instructions {
+    text-align: center;
+    font-size:4em;
+    margin-top:20%;
+  }
+  .steps {
+    text-align: center;
+    margin: auto;
+  }
+
+  ul.history-timeline {
+    list-style: none;
+    padding-left:0;
+  }
+  .history-timeline li:first-child{
+    margin-top:2.5em;
+  }
+  .history-timeline li{
+    margin:1.5em 0em;
+    text-align: left;
+  }
+  .history-timeline .circle {
+        display: inline-block;
+    background: #02BAD8;
+    overflow: visible;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 1.2em;
+    margin-right: 15px;
+    /* margin-left: -30px; */
+    line-height: 14px;
+  }
+  .history-timeline .circle.current:before {
+    content: '';
+    /* float: left; */
+    width: 22px;
+    height: 22px;
+    background: rgb(255, 255, 255);
+    position: fixed;
+    z-index: -2;
+    border-radius: 50%;
+    /* left: 0px; */
+    margin-left: -4px;
+    margin-top: -4px;
+}
+  .history-timeline .circle .continue.completed {
+    height: 36px;
+    width: 4px;
+    float: left;
+    position: fixed;
+    background: white;
+    z-index: -1;
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+  .stark-card {
+    width: 580px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0px 0px 64px rgb(204, 204, 204);
+    border-radius: 10px;
+    padding: 25px 35px;
+    text-align: left;
+  }
+  .stark-card.completed:hover {
+    opacity: 1.0 !important;
+    transition: opacity 1000ms;
+  }
+  .stark-card.completed {
+    opacity: 0.3 !important;
+    transition: opacity 1000ms;
+  }
+  .stark-card p {
+    font-family: Merriweather;
+    font-weight: light;
+    line-height: 33px;
+  }
+  .stark-card.instruction h2 {
+    text-align: center;
+    margin-top:0;
+    width: 100%;
+  }
+  .stark-card.instruction {
+    min-height: inherit;
+    padding: 4em 3em 5em 3em;
+  }
+  .stark-card.instruction p {
+    font-family: Merriweather;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 33px;
+    margin-top: 3em;
+  }
+  .stark-card.instruction .drop-cap {
+    display: block;
+    float: left;
+    font-size: 3em;
+    font-weight: bold;
+    margin-top: 0.3em;
+    margin-right: 0.2em;
+    line-height: 1em;
+  }
+  .shepherd-target.stark-card:not(.shepherd-enabled) > * {
+    transition: opacity 0.4s;
+    opacity: 0.3;
+  }
+  .checkmark {
+    stroke-width:2px;
+    stroke:white;
+  }
+  .stark-card h2 {
+    display:inline-block;
+    color: #333;  
+    width: 80%;
+    padding-bottom: 3px;
+    padding-top: 13px;
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 2em;
+    margin-bottom: 1.3em;
+    margin-top:1em;
+  }
+  
+  .stark-card .ui.basic.button {
+    border-radius: 28px;
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 150px;
+    box-shadow: none;
+    margin-top:50px;
+  }
+  .stark-card .ui.basic.button:hover {
+    box-shadow: none;
+  }
+  
+  .stark-card.question .ui.radio.checkbox  {
+    width: 50%;
+    float:left;
+    margin-bottom: 10px;
+  }
+  .stark-card.question .ui.radio.checkbox label:before {
+    border-radius: 2px;
+  }
+  .stark-card.question .ui.radio.checkbox input:checked ~ label:after {
+      background-color: #e03997;
+      border-radius: 4px;
+      transform: scale(0.6);
+  }
+  .stark-card.question .ui.radio.checkbox input:checked ~ label:after {
+      background-color: #e03997;
+  }
+  .card-container {
+    margin-top:12em;
+    margin-left:auto;
+    margin-right: auto;
+    width: 580px;
+  }
+  .ui.radio.checkbox label:after {
+    background-color: #e03997;
+  }
+  span.ui.label.points {
+    height: 69px;
+    float: right;
+    margin-right:-20px;
+    border-radius: 50%;
+    line-height: 50px;
+    font-size: 1.2em;
+    width: 69px;
+}
+.hint {
+    background: #F9F9F9;
+    margin-top: -10px;
+    border-radius: 0px 0px 9px 9px;
+    padding: 10px 6px 8px 0px;
+    line-height: 38px;
+    color: #757575;
+    box-shadow: 0px 12px 57px rgba(204, 204, 204, 0.5)
+}
+.course-content {
+  height: 100vh;
+  overflow-y: scroll;
+}
+/* line 16, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+.item.user-profile {
+  text-align: left; 
+}
+/* line 22, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+ .user-profile .image {
+  width: 4em;
+}
+/* line 25, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+ .user-profile .stat {
+  padding-left: 0.2em;
+      padding-left: 0.5em;
+    display: inline-block;
+    text-align: left;
+}
+/* line 27, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+ .user-profile .stat h5,  .user-profile .stat h6 {
+  margin: 0;
+}
+/* line 31, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+ .user-profile .level {
+  width: 100px;
+  height: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+      margin-top: 7px;
+    margin-left: -5px;
+}
+/* line 39, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
+ .user-profile .progress {
+  margin-top:2px;
+  background: #17BCC5;
+  width: 72px;
+  height: 6px;
+  border-radius: 6px 0px 0px 6px;
+  margin-top: 1px;
+  margin-left: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.41);
+
+}
+
+.progress-column {
+    min-width: 10em;
+    padding-right: 3em;
+    background: #333;
+    /* min-width: 250px; */
+    color: white;
+    padding-top: 4em;
+    padding-left: 1em;
+    height: 100vh;
+    z-index: 102;
+    position: fixed;
+    width: 17%;
+    left: 0;
+    top: 0;
+}
+.content-container {
+    display: block;
+    left: 17%;
+    height: 100%;
+    position: fixed;
+    display: block;
+    top: 60px;
+    position: fixed;
+    width: 43%;
+}
+.content-container.initial{
+  position: fixed;
+    margin: auto;
+    width: 100%;
+    left: 0;
+    height:100vh;
+}
+body {
+  min-width: 1000px !important;
+}
+
+#editor-column {
+  padding: 0px;
+  text-align: left;
+  border: 0;
+  width: 40%;
+  height:100%;
+  top:60px;
+  position: fixed;
+  right:0;
+  background-color: #282C34;
+
+}
+#editor-column .header {
+  text-align: left;
+  padding-left: 10px;
+  background-color: #25282C;
+  padding: 11px 20px;
+  color: #5F5F5F;
+  border-bottom: 1px solid #383C42;
+}
+#editor-column .editor {
+  min-height: 450px;
+      height: 70vh;
+}
+#editor-column .ace-tomorrow-night {
+  background-color: #282C34;
+}
+#editor-column .ace-tomorrow-night .ace_comment {
+  color: #717784;
+  font-style: italic;
+}
+#editor-column .ace-tomorrow-night .ace_marker-layer .ace_active-line {
+  background: #393D44;
+}
+#editor-column .ace-tomorrow-night .ace_gutter {
+  background: #282C34;
+  color: #545d6e;
+}
+#editor-column .ace-tomorrow-night .ace_gutter-active-line {
+  background-color: #393D44;
+}
+#editor-column span.ace_identifier {
+  color: #63AEF7;
+}
+#editor-column .ui.bottom.attached.tab.segment {
+  padding: 0;
+}
+#editor-column .ui.top.attached.tabular.menu {
+  padding: 0;
+  margin: 0;
+}
+#editor-column a.tabitem {
+  overflow: hidden;
+  position: relative;
+  padding: 0px 10px !important;
+  line-height: 3em;
+  background: #25282C;
+  border-left: 3px solid #25282C;
+  min-width: 180px;
+  text-align: center;
+  color: #A7A7A7;
+  font-size: 12px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+#editor-column a.tabitem.active {
+  border-left: 3px solid #4183C4;
+  min-width: 180px;
+  background: #40464E;
+  color: white;
+}
+#editor-column a.tabitem:hover {
+  background: #4b535c;
+  border-left: 3px solid #3269a0;
+}
+#editor-column .savestate {
+  background: #4183C4;
+  width: 8px;
+  border-radius: 50%;
+  height: 8px;
+  float: right;
+  margin-top: 14px;
+}
+#editor-column .editor-tab {
+  border: 0;
+  margin: 0;
+}
+#editor-column .ui.top.attached.tabular.menu {
+  background: #1B1C1D;
+  border-radius: 0;
+}
+#editor-column .debugger {
+  background-color: #40464E;
+  color: white;
+  padding: 10px 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  border-width: 0;
+}
+#editor-column .debugger font {
+  word-spacing: 3.1px;
+}
+
+.stark-button {
+  margin: 10px 5px;
+  -webkit-box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #dba007;
+  -moz-box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #dba007;
+  box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #dba007;
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  color: white;
+  font-family: Raleway;
+  -webkit-transition: border 100ms ease-out, margin 100ms ease-out;
+  -moz-transition: border 100ms ease-out, margin 100ms ease-out;
+  -o-transition: border 100ms ease-out, margin 100ms ease-out;
+  -ms-transition: border 100ms ease-out, margin 100ms ease-out;
+  transition: border 100ms ease-out, margin 100ms ease-out;
+}
+.stark-button span {
+  -webkit-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -o-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 65px;
+  display: inline-block;
+  border-radius: 8px;
+  background-color: #F9C335;
+  overflow: hidden;
+}
+.stark-button:hover span {
+  background-color: #faca4e;
+  -webkit-transform: translate(0px, 1px);
+  -moz-transform: translate(0px, 1px);
+  -o-transform: translate(0px, 1px);
+  transform: translate(0px, 1px);
+  cursor: pointer;
+}
+.stark-button:active span {
+  -webkit-transform: translate(0px, 3px);
+  -moz-transform: translate(0px, 3px);
+  -o-transform: translate(0px, 3px);
+  transform: translate(0px, 3px);
+}
+
+.stark-button-blue {
+  margin: 10px 5px;
+  -webkit-box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #0f7b80;
+  -moz-box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #0f7b80;
+  box-shadow: 0px 4px 10px #333, inset 0px -10px 0px #0f7b80;
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  color: white;
+  font-family: Raleway;
+  -webkit-transition: border 100ms ease-out, margin 100ms ease-out;
+  -moz-transition: border 100ms ease-out, margin 100ms ease-out;
+  -o-transition: border 100ms ease-out, margin 100ms ease-out;
+  -ms-transition: border 100ms ease-out, margin 100ms ease-out;
+  transition: border 100ms ease-out, margin 100ms ease-out;
+}
+.stark-button-blue span {
+  -webkit-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -o-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  -ms-transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  transition: background-color 0.2s ease-in-out, -webkit-transform 0.1s ease-in-out;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 65px;
+  display: inline-block;
+  border-radius: 8px;
+  background-color: #17BCC5;
+  overflow: hidden;
+}
+.stark-button-blue:hover span {
+  background-color: #1ad2dc;
+  -webkit-transform: translate(0px, 1px);
+  -moz-transform: translate(0px, 1px);
+  -o-transform: translate(0px, 1px);
+  transform: translate(0px, 1px);
+  cursor: pointer;
+}
+.stark-button-blue:active span {
+  -webkit-transform: translate(0px, 3px);
+  -moz-transform: translate(0px, 3px);
+  -o-transform: translate(0px, 3px);
+  transform: translate(0px, 3px);
+}
+
+#course-menu {
+  height:60px;
+    width: 100%;
+    background: white;
+    position: fixed;
+    right: 0;
+    border-bottom: 1px solid #CCC;
+
+}
+#course-menu.initial {
+  width:100%;
+}
+#course-menu h2 {
+  font-size: 12px;
+  margin:0;
+
+}
+.course-details{
+    margin-left: 17%;
+    padding-left: 33px;
+    border-left: 1px solid #E4E4E4;
+    height: 59px;
+    padding-top: 14px;
+}
+
+#course-menu h4 {
+   font-family: Montserrat;
+    font-weight: lighter;
+    font-size: 1.3em;
+  
+  margin:0;
+
+}
+#course-menu .label {
+  border: 1px solid rgba(93, 93, 93, 0.21);
+}
+.course-tags {
+  float:right;
+  margin: 10px 10px 10px 0px;
+}
+.toggle-sidebar {
+  margin-left: 10px;
+  margin-right: 20px;
+}
