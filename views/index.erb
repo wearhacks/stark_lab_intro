@@ -38,9 +38,12 @@ $(document).ready(function(){
   }
   var timeline = new Timeline(steps);
   var custom_step_functions = {
-    0 : function() {},
+    0 : function() {
+
+    },
     1 : function() {
       //extra animation
+      $('.content-container').css({top:"60px"});
 
       $('#course-menu').css({display:"block"});
       new Bounce().translate({
@@ -90,7 +93,7 @@ $(document).ready(function(){
     //scroll down, with newly created space
     console.log( $(".course-content")[0].scrollHeight)
     console.log($next_step.offset().top)
-    $(".course-content").animate({scrollTop: $(".course-content")[0].scrollHeight - ($next_step.outerHeight(true))}, 600);
+    $(".course-content").scrollTo($next_step, {offsetTop : '100'});
     //show new card
     setTimeout(
       function(){

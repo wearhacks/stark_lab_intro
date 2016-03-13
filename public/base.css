@@ -250,7 +250,7 @@ body {
     display: block;
     top: 60px;
     position: fixed;
-    width: 43%;
+    width: 46%;
 }
 .content-container.initial{
   position: fixed;
@@ -258,6 +258,7 @@ body {
     width: 100%;
     left: 0;
     height:100vh;
+    top:0;
 }
 body {
   min-width: 1000px !important;
@@ -267,7 +268,7 @@ body {
   padding: 0px;
   text-align: left;
   border: 0;
-  width: 40%;
+  width: 37%;
   height:100%;
   top:60px;
   position: fixed;
@@ -285,7 +286,6 @@ body {
 }
 #editor-column .editor {
   min-height: 450px;
-      height: 70vh;
 }
 #editor-column .ace-tomorrow-night {
   background-color: #282C34;
@@ -315,24 +315,24 @@ body {
   margin: 0;
 }
 #editor-column a.tabitem {
-  overflow: hidden;
-  position: relative;
-  padding: 0px 10px !important;
-  line-height: 3em;
-  background: #25282C;
-  border-left: 3px solid #25282C;
-  min-width: 180px;
-  text-align: center;
-  color: #A7A7A7;
-  font-size: 12px;
-  font-weight: lighter;
-  cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    padding: 0px 10px !important;
+    line-height: 35px;
+    background: #25282C;
+    border-left: 3px solid #25282C;
+    min-width: 180px;
+    text-align: center;
+    color: #A7A7A7;
+    font-size: 12px;
+    font-weight: lighter;
+    cursor: pointer;
 }
 #editor-column a.tabitem.active {
-  border-left: 3px solid #4183C4;
-  min-width: 180px;
-  background: #40464E;
-  color: white;
+    border-left: 3px solid #3294F5;
+    min-width: 221px;
+    background: #282C34;
+    color: white;
 }
 #editor-column a.tabitem:hover {
   background: #4b535c;
@@ -361,6 +361,8 @@ body {
   white-space: pre-wrap;
   word-wrap: break-word;
   border-width: 0;
+  height:300px;
+  overflow: scroll;
 }
 #editor-column .debugger font {
   word-spacing: 3.1px;
