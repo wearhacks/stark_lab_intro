@@ -74,7 +74,7 @@ body {
     opacity: 0.3 !important;
     transition: opacity 1000ms;
   }
-  .stark-card p {
+  .stark-card p, .stark-card li, .stark-card {
     font-family: Merriweather;
     font-weight: light;
     line-height: 33px;
@@ -104,6 +104,28 @@ body {
     margin-right: 0.2em;
     line-height: 1em;
   }
+  .stark-card .annotate {
+    background: #B6FFF0;
+    color: #333;
+    font-style: italic;
+    padding: 2px 1px;
+  }
+.stark-card .annotation.invert {
+    background: #333333;
+    color: #A5A5A5;
+}
+
+.stark-card .annotation {
+    display: block;
+    margin: 0px -3em 0px -3em;
+    padding: 0.5em 2em;
+    background: #F3F3F3;
+    font-size: 0.9em;
+    line-height: 25px;
+}
+.stark-card .annotation .elem{
+float:left;
+}
   .shepherd-target.stark-card:not(.shepherd-enabled) > * {
     transition: opacity 0.4s;
     opacity: 0.3;
@@ -138,11 +160,24 @@ body {
   .stark-card .ui.basic.button:hover {
     box-shadow: none;
   }
-  
+  .ui.label.points.pinkcolor {
+  background:#8A00B5 !important;
+  -webkit-transition:background 1s;
+  -moz-transition:background 1s;
+  -o-transition:background 1s;
+  transition:background 1s
+  }
   .stark-card.question .ui.radio.checkbox  {
-    width: 50%;
-    float:left;
+    color:#222;
     margin-bottom: 10px;
+    width: 100%
+  }
+  .stark-card.question .ui.radio.checkbox label {
+    color:#696969;
+  }
+  .stark-card.question .ui.radio.checkbox label:hover {
+    color:#555;
+    cursor: pointer;
   }
   .stark-card.question .ui.radio.checkbox label:before {
     border-radius: 2px;
@@ -175,6 +210,7 @@ body {
 }
 .hint {
     background: #F9F9F9;
+    text-align: center;
     margin-top: -10px;
     border-radius: 0px 0px 9px 9px;
     padding: 10px 6px 8px 0px;
@@ -204,6 +240,7 @@ body {
 /* line 27, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
  .user-profile .stat h5,  .user-profile .stat h6 {
   margin: 0;
+  color:white;
 }
 /* line 31, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
  .user-profile .level {
@@ -218,7 +255,7 @@ body {
  .user-profile .progress {
   margin-top:2px;
   background: #17BCC5;
-  width: 72px;
+  width: 2px;
   height: 6px;
   border-radius: 6px 0px 0px 6px;
   margin-top: 1px;
@@ -233,7 +270,7 @@ body {
     background: #333;
     /* min-width: 250px; */
     color: white;
-    padding-top: 4em;
+    padding-top: 2em;
     padding-left: 1em;
     height: 100vh;
     z-index: 102;

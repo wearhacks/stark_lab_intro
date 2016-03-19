@@ -1,0 +1,175 @@
+
+<% content_for :body do %>
+<script>
+
+$(document).ready(function(){
+
+
+  var current_step = 1
+  var go_to_next = function(current_step, next_step) {
+    var $current_step = $(".card-container[data-step='" + current_step + "']");
+    var $next_step = $(".card-container[data-step='" + next_step + "']");
+    $current_step.find(".stark-card").toggleClass('completed');
+
+
+    //create space (->block)
+    $next_step.css({opacity:0, display:"block"});
+    //scroll down, with newly created space
+    console.log( $(".course-content")[0].scrollHeight)
+    console.log($next_step.offset().top)
+    $(".course-content").scrollTo($next_step, {offsetTop : '100'});
+    //show new card
+    setTimeout(
+      function(){
+        new Bounce().scale({
+          delay:0,
+          duration:1500,
+          bounces:10,
+          from: { x: 0.6, y: 0.6},
+          to: { x: 1, y: 1 },
+        }).applyTo($next_step.find('.stark-card')); 
+        $next_step.css({opacity:1});
+
+
+      }, 400);
+
+
+  }
+
+  $('.stark-card.instruction .next-step').on('click',function() {
+    $(this).toggleClass('disabled');
+    var current_step = parseInt($(this).closest('.card-container').data('step'));
+    var next_step = current_step + 1;
+    
+    go_to_next(current_step, next_step);
+  });
+
+  $('.stark-card.question .next-step').on('click',function() {
+    var $current_card = $(this).closest('.card-container')
+    var current_step = parseInt($current_card.data('step'));
+    var next_step = current_step + 1;
+    
+    var $checked = $current_card.find('.ui.form input:checked');
+
+    if($checked.length == 0) {
+      var $hint = $current_card.find('.hint');
+      $hint.css({display:"block", opacity:0});
+      $hint.animateCSS('flipInX', {delay: 500});
+       
+      new Bounce().translate({
+        delay:0,
+        duration:1500,
+        bounces:10,
+        from: { x: 0, y: -50},
+        to: { x: 0, y: 0 },
+      }).applyTo($hint); 
+      $hint.css({opacity:1});
+      go_to_next(current_step, next_step);
+    }
+    else {
+      alert('yay');
+    }
+  });
+
+
+
+});
+
+
+</script>
+
+
+<body>
+<div class="content-container initial">
+
+
+
+
+<div class="steps row" >  
+
+
+  <div class="course-content">
+    <div class="card-container" data-step="0">
+      <div class="stark-card instruction">
+
+        <h1>Hey there!</h1>
+        <p><span class="drop-cap">W</span>elcome to Stark! This is a <b>Stark Card</b>. This is our nifty tool that teachers will use to provide you with <i>digestible</i> chunks of information.</p>
+        <div class="ui basic teal button next-step"> Gotcha!</div>
+
+      </div>
+  
+    </div>
+    
+    <div class="card-container" data-step="1" style="display:none">
+      <div class="stark-card instruction" >
+        <div class="ui center aligned segment basic">
+          <img src="Batman.svg" alt="Kiwi standing on oval">
+        <p>First things first! Let's get you a profile set up!
+        </p>
+        
+      </div>
+        <div class="ui center aligned segment basic">
+          <a class="ui button" href="/auth/github">
+            <i class="ui icon github"></i>Login using github
+          </a>
+           <a class="ui button blue" href="/auth/facebook">
+            <i class="ui icon facebook"></i>Login using facebook
+          </a>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="card-container" data-step="2" style="display:none">
+      <div class="stark-card instruction">
+        <h2>Welcome</h2>
+        <p>Welcome to Stark! This is a stark card. This is our nifty tool for that teachers will use to provide you with digestible chunks of information.</p>
+        <div class="ui basic teal button next-step"> Gotcha!</div>
+      </div>
+    </div>
+    
+    <div class="card-container" data-step="3" style="display:none">
+      <div class="stark-card question">
+
+        <h2>Quiz Arduino Basics</h2>
+        <span class="ui label points right teal">+200</span>
+        <p>If you answer the following questions 4+4 is:</p>
+        <div class="ui segment form basic clearing">
+
+           <div class="ui radio checkbox"><input type="radio" name="radio">
+              <label>8</label>
+            </div>
+
+
+            <div class="ui radio checkbox"><input type="radio" name="radio">
+
+              <label>8</label>
+            </div>
+            <div class="ui radio checkbox"><input type="radio" name="radio">
+              <label>3</label>
+            </div>
+            <div class="ui radio checkbox"><input type="radio" name="radio">
+              <label>5</label>
+            </div>
+        </div>
+        <div class="ui basic teal button next-step"> Submit</div>
+          
+      </div>
+      <div class="hint" style="display:none">
+          Select an answer and try again!
+      <div class="ui button">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+      </div>
+    </div>
+    
+    <div style="height:400px; width:100%">
+    </div>
+  </div>
+</div>
+
+
+</div>
+</body>
+<% end %>
