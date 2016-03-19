@@ -25,8 +25,8 @@ class SinatraApp < Sinatra::Base
     set :sessions, true
     set :inline_templates, true
 
-    if ENV['MONGOHQ_URL']
-      MongoMapper.setup({'stark_prod' => {'uri' => ENV['MONGODB_URI']}}, 'production')
+    if ENV['MONGOLAB_URI']
+      MongoMapper.setup({'stark_prod' => {'uri' => ENV['MONGOLAB_URI']}}, 'stark_prod')
     else
       MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
       MongoMapper.database = "stark_dev"
