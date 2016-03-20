@@ -30,13 +30,13 @@
 <script>
 
 $(document).ready(function(){
-  var steps = {
+  var chapters = {
       "Introduction":true, 
       "Gather Required Tools":false, 
       "Connecting the Arduino":false, 
       "Quiz Aduino Basics":false
   }
-  var timeline = new Timeline(steps);
+  var timeline = new Timeline(chapters);
   var custom_step_functions = {
     0 : function() {},
     1 : function() {
@@ -54,7 +54,6 @@ $(document).ready(function(){
 
 
     //animation
-    timeline.nextStep();
     //create space (->block)
     $next_step.css({opacity:0, display:"block"});
     //scroll down, with newly created space
@@ -179,7 +178,7 @@ $(document).ready(function(){
 </div>-->
 
 
-<div data-tutorial="2" class="steps row">  
+<div class="steps row">  
 
 
   <div class="course-content">

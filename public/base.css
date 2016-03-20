@@ -208,6 +208,11 @@ float:left;
     font-size: 1.2em;
     width: 69px;
 }
+.chapter-progress {
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 61%, #2cb5e8 75%);
+  height:4px;
+  width: 
+}
 .hint {
     background: #F9F9F9;
     text-align: center;
@@ -221,6 +226,7 @@ float:left;
 .course-content {
   height: 100vh;
   overflow-y: scroll;
+  z-index: 0;
 }
 /* line 16, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
 .item.user-profile {
@@ -494,12 +500,14 @@ body {
 }
 
 #course-menu {
-  height:60px;
-    width: 100%;
+    height:60px;
     background: white;
     position: fixed;
+    left:17%;
     right: 0;
     border-bottom: 1px solid #CCC;
+
+  z-index: 2;
 
 }
 #course-menu.initial {
@@ -511,7 +519,6 @@ body {
 
 }
 .course-details{
-    margin-left: 17%;
     padding-left: 33px;
     border-left: 1px solid #E4E4E4;
     height: 59px;
@@ -531,7 +538,7 @@ body {
 }
 .course-tags {
   float:right;
-  margin: 10px 10px 10px 0px;
+  margin: 17px 10px 10px 0px;
 }
 .toggle-sidebar {
   margin-left: 10px;

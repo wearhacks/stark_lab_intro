@@ -7,17 +7,36 @@ $(document).ready(function(){
   $('.ui.radio.checkbox label').on('click', function() {
     $(this).siblings('input').prop('checked', true);
   });
-    $('.hint').find(".ui.button").on("click", function(){
+
+  $('.hint').find(".ui.button").on("click", function(){
     $(this).parent().slideToggle(500);
   });
 
+  var chapter_height = $('.card-container')
+    .map(function(i,el){
+      return $(el).outerHeight(true);
+    })
+    .toArray()
+    .reduce(function(a,b){ 
+      return a+b
+    }, 0) + 150 - $( ".course-content").height();
+
+  var course_scroll = function() {
+    console.log("hello");
+    var scrollbottom = $( ".course-content").scrollTop() ;
+    var width = (scrollbottom*100)/(chapter_height);
+    width = Math.min(width, 100);
+    $('.chapter-progress').animate({width:width + "%"}, 0);
+  };
+  course_scroll();
+  $( ".course-content" ).scroll(course_scroll);
+
   var steps = {
-      "Introduction":false, 
-      "Intro: Progress Bar":false, 
-      "Connecting the Arduino":false, 
-      "Intro Quiz":false,
-      "Start a new course":false,
-      "Course levels":false,
+      "Interface Introduction":{ completed: false, cards:5 }, 
+      "Connecting the Arduino":{ completed: false, cards:0 }, 
+      "Intro Quiz":{ completed: false, cards:0 },
+      "Start a new course":{ completed: false, cards:0 },
+      "Course levels":{ completed: false, cards:0 },
   }
   var timeline = new Timeline(steps);
   var custom_step_functions = {
@@ -52,16 +71,7 @@ $(document).ready(function(){
 
     },
     5:function() {
-      $('.content-container').css({top:"60px"});
 
-      $('#course-menu').css({display:"block"});
-      new Bounce().translate({
-        delay:0,
-        duration:1500,
-        bounces:0,
-        from: { x: 0, y: -100},
-        to: { x: 0, y: 0 },
-      }).applyTo($('#course-menu')); 
     }
 
   }
@@ -73,7 +83,7 @@ $(document).ready(function(){
 
 
     //animation
-    timeline.nextStep();
+   
     //create space (->block)
     $next_step.css({opacity:0, display:"block"});
     //scroll down, with newly created space
@@ -131,25 +141,19 @@ $(document).ready(function(){
       $hint.css({opacity:1});
     }
     else {
-      new Bounce().scale({
-        delay:0,
-        duration:2500,
-        bounces:10,
-        from: { x: 0.7, y: 0.7},
-        to: { x: 1.3, y: 1.3 },
-      }).applyTo($current_card.find('.points')); 
-      $current_card.find('.points').toggleClass('pinkcolor');
-      var $progress = $('.progress-column .level .progress');
+      $(this).animate({width:"37", padding:"0", height:"37" },500);
+      $(this).find('span').fadeOut(function(){
+        $(this).html('<i class="ui icon check" style="font-size:1.2em; float:left; margin-left:10px; margin-top:12px;"></i>')
+      }).fadeIn();
 
-        $progress.animate({width: (90)+"px"},500)
-       $progress.animate({width: ($progress.width()+10)+"px"},1000)
-       $(this).html('Correct! <i class="ui icon check" style="margin:0"></i>')
-       $(this).toggleClass('disabled');       
+      setTimeout(function() {
+
+        $(this).toggleClass('disabled');       
+       },1000);
        setTimeout(function() {
-        $(this).popup('hide');
         go_to_next(current_step, next_step);
 
-       },1000);
+       },2500);
     }
   });
 
@@ -185,23 +189,23 @@ $(document).ready(function(){
 
   </div>
 
-  <div id="course-menu" style="display:none;">
-   <div class="course-tags">
-    <a class="ui teal label">
-      <i class="ui icon idea"></i>
-      Difficulty
-      <div class="detail">Beginner</div>
-    </a>
-    <a class="ui teal label">
-      <i class="ui icon setting"></i>
-      Hardware
-      <div class="detail">Arduino</div>
-    </a>
-    <a class="ui teal label">
-      <i class="ui icon wait"></i>
-      Duration
-      <div class="detail">10 min</div>
-    </a>
+  <div id="course-menu">
+    <div class="course-tags" style="display:none">
+      <a class="ui teal label">
+        <i class="ui icon idea"></i>
+        Difficulty
+        <div class="detail">Beginner</div>
+      </a>
+      <a class="ui teal label">
+        <i class="ui icon setting"></i>
+        Hardware
+        <div class="detail">Arduino</div>
+      </a>
+      <a class="ui teal label">
+        <i class="ui icon wait"></i>
+        Duration
+        <div class="detail">10 min</div>
+      </a>
     </div>
 
     <div class="course-details">
@@ -209,7 +213,10 @@ $(document).ready(function(){
 
         <h4>Introduction to Stark</h4>
         <h2>Blinking an LED </h2>
+
     </div>
+
+    <div class="chapter-progress"></div>
   </div>
     
 
@@ -217,188 +224,188 @@ $(document).ready(function(){
 
     
   </div>
+  
   <div class="content-container initial">
 
 
 
 
 
-<divclass="steps row" >  
+    <div class="steps row" >  
 
 
-  <div class="course-content">
-
-    <div class="card-container" data-step="0" >
-      <div class="stark-card instruction">
-        <div class="ui segment basic center aligned">
-            <img src="<%= user.avatar %>" alt="" width="150" class="ui image circular" style="
-                border: 3px solid white;
-                box-shadow: 1px 1px 19px rgba(204, 204, 204, 0.7);
-                margin:auto;
-            ">
-            <h3>Welcome back <%= user.firstname %>, you look fabulous!</h3>
-        </div>
-        
-        <p><span class="drop-cap">Y</span>our brand new profile appears on your left. The panel also contains the card you are on and the upcoming cards.</p>
-        <div class="ui basic teal button next-step"> Continue </div>
-
-      </div>
-  
-    </div>
-    
-    <div class="card-container" data-step="1" style="display:none">
-      <div class="stark-card instruction" >
-        <h1>The Progress Bar</h1>
-        <p><span class="drop-cap">T</span>he view on your left consists of your profile and current view. We've annoted some UI elements here:
-        </p>
-
-
-        <ul>
-          <li ><a href="#" class="annotate" data-annotate="profile">Profile</a>
-          <div class="annotation" data-annotation="profile" style="display:none">
-
-
-          <div class="ui image small" style="
-        background: #333;
-        width: 197px;
-        padding: 10px;
-        border-radius: 10px;
-        /* opacity: 0.6; */
-        margin: auto;
-        margin-top:20px;
-        display: block;
-    "><img src="" alt="">
-                <a class="item user-profile">
-                  <div class="ui circular image">
-                     <img src="https://avatars.githubusercontent.com/u/5846191?v=3">
-                  </div>
-                 <div class="stat ui middle aligned content ">
-                   <h5>
-                     <span>Nadim Islam</span>
-                   </h5>
-                   <h6>
-                     Student | Level 1
-                   </h6>
-                  <div class="level"><div class="progress"></div></div>
-                 </div>
-                  
-                </a>
-            </div>
-                      Your profile consists of your avatar, your name and your current level as a student. The bar below shows how far you are from getting to the next level!
-        </div>
-        </li>
-          <li> <a href="#" class="annotate" data-annotate="progress">Progress</a>
-
-                    <div class="annotation invert" data-annotation="progress" style="display:none">
-          The progress bar increases as you gain points indicated on the corner of the cards.
-          As you gain points, your points increase and you level up!
-            <div class="elem">
-              <div class="user-profile"><div class="level"><div class="progress" style="width:2px"></div></div></div>
-            </div>
-             <div class="ui icon angle right"></div>
-            <div class="elem">
-              <span class="ui label points right teal">+200</span>
-            </div>
-             <div class="ui icon angle right"></div>
-            <div class="elem">
-              <div class="user-profile"><div class="level"><div class="progress" style="width:30px"></div></div></div>
+      <div class="course-content">
+        <div class="chapter-title">Introduction</div>
+        <div class="card-container" data-step="0" >
+          <div class="stark-card instruction">
+            <div class="ui segment basic center aligned">
+                <img src="<%= user.avatar %>" alt="" width="150" class="ui image circular" style="
+                    border: 3px solid white;
+                    box-shadow: 1px 1px 19px rgba(204, 204, 204, 0.7);
+                    margin:auto;
+                ">
+                <h3>Welcome back <%= user.firstname %>, you look fabulous!</h3>
             </div>
             
+            <p><span class="drop-cap">Y</span>our brand new profile appears on your left. The panel also contains the card you are on and the upcoming cards.</p>
+            <div class="ui basic teal button next-step"> Continue </div>
+
+          </div>
+      
+        </div>
+        
+        <div class="card-container" data-step="1" style="display:none">
+          <div class="stark-card instruction" >
+            <h1>The Progress Bar</h1>
+            <p><span class="drop-cap">T</span>he view on your left consists of your profile and current view. We've annoted some UI elements here:
+            </p>
+
+
+            <ul>
+              <li ><a href="#" class="annotate" data-annotate="profile">Profile</a>
+              <div class="annotation" data-annotation="profile" style="display:none">
+
+
+              <div class="ui image small" style="
+            background: #333;
+            width: 197px;
+            padding: 10px;
+            border-radius: 10px;
+            /* opacity: 0.6; */
+            margin: auto;
+            margin-top:20px;
+            display: block;
+        "><img src="" alt="">
+                    <a class="item user-profile">
+                      <div class="ui circular image">
+                         <img src="https://avatars.githubusercontent.com/u/5846191?v=3">
+                      </div>
+                     <div class="stat ui middle aligned content ">
+                       <h5>
+                         <span>Nadim Islam</span>
+                       </h5>
+                       <h6>
+                         Student | Level 1
+                       </h6>
+                      <div class="level"><div class="progress"></div></div>
+                     </div>
+                      
+                    </a>
+                </div>
+                          Your profile consists of your avatar, your name and your current level as a student. The bar below shows how far you are from getting to the next level!
+            </div>
+            </li>
+              <li> <a href="#" class="annotate" data-annotate="progress">Progress</a>
+
+                        <div class="annotation" data-annotation="progress" style="display:none">
+              The progress bar increases as you gain points indicated on the corner of the cards.
+              As you gain points, your points increase and you level up!
+                <div class="elem">
+                  <div class="user-profile"><div class="level"><div class="progress" style="width:2px"></div></div></div>
+                </div>
+                 <div class="ui icon angle right"></div>
+                <div class="elem">
+                  <span class="ui label points right teal">+200</span>
+                </div>
+                 <div class="ui icon angle right"></div>
+                <div class="elem">
+                  <div class="user-profile"><div class="level"><div class="progress" style="width:30px"></div></div></div>
+                </div>
+                
+               
+                
+            </div>
+              </li>
+            </ul>
+            
+
+            <div class="ui basic teal button next-step"> Gotcha!</div>
+          </div>
+        </div>
+        
+        <div class="card-container" data-step="2" style="display:none">
+          <div class="stark-card instruction">
+            <p> Just a placeholder</p>
+            <div class="ui basic teal button next-step"> Gotcha!</div>
+          </div>
+        </div>
+        
+        <div class="card-container" data-step="3" style="display:none">
            
-            
+          <div class="stark-card question">
+            <div class="ui icon check circle"></div>
+            <h2>Quiz</h2>
+            <span class="ui label points right teal">+200</span>
+
+            <p>Just before you start, let's give you some free points for sticking with us so far! 
+             </p>
+              <h4> Select the answer to the following question : what is 20 + 22?</h4>
+            <div class="ui segment form basic clearing">
+
+
+
+
+                <div class="ui radio checkbox"><input type="radio" name="radio">
+
+                  <label>42</label>
+                </div>
+                           <div class="ui radio checkbox"><input type="radio" name="radio">
+                  <label>The answer to life the universe and everything</label>
+                </div>
+                <div class="ui radio checkbox"><input type="radio" name="radio">
+                  <label>Forty-Two</label>
+                </div>
+                <div class="ui radio checkbox"><input type="radio" name="radio">
+                  <label>101010</label>
+                </div>
+            </div>
+            <div class="ui basic teal button next-step"> <span>Submit</span></div>
+              
+          </div>
+          <div class="hint" style="display:none">
+              Select an answer before submitting!
+          <div class="ui button">
+            <i class="checkmark icon"></i>
+            Ok
+          </div>
+          </div>
         </div>
-          </li>
-        </ul>
+
         
 
-        <div class="ui basic teal button next-step"> Gotcha!</div>
-      </div>
-    </div>
-    
-    <div class="card-container" data-step="2" style="display:none">
-      <div class="stark-card instruction">
-        <p> Just a placeholder</p>
-        <div class="ui basic teal button next-step"> Gotcha!</div>
-      </div>
-    </div>
-    
-    <div class="card-container" data-step="3" style="display:none">
-       
-      <div class="stark-card question">
-        <div class="ui icon check circle"></div>
-        <h2>Quiz</h2>
-        <span class="ui label points right teal">+200</span>
 
-        <p>Just before you start, let's give you some free points for sticking with us so far! 
-         </p>
-          <h4> Select the answer to the following question : what is 20 + 22?</h4>
-        <div class="ui segment form basic clearing">
+        <div class="card-container" data-step="4" style="display:none">
+          <div class="stark-card instruction">
+            <p><span class="drop-cap">N</span>ow that you have a few <span class="annotate">experience points</span> under your belt, we can get you to a course.</p>
 
-
-
-
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-
-              <label>42</label>
-            </div>
-                       <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>The answer to life the universe and everything</label>
-            </div>
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>Forty-Two</label>
-            </div>
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>101010</label>
-            </div>
+            <p>The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
+            <div class="ui basic teal button next-step"> Let's begin!</div>
+          </div>
         </div>
-        <div class="ui basic teal button next-step"> Submit</div>
-          
-      </div>
-      <div class="hint" style="display:none">
-          Select an answer before submitting!
-      <div class="ui button">
-        <i class="checkmark icon"></i>
-        Ok
-      </div>
-      </div>
-    </div>
 
-    
+        <div class="card-container" data-step="5" style="display:none">
+          <div class="stark-card instruction">
+            <p><span class="drop-cap">T</span>he top bar will always display a quick reference to handy infos such as
 
+              <ul>
+                <li>Course Name</li>
+                <li>Course Difficulty</li>
+                <li>Required Hardware</li>
+                <li>Duration</li>
 
-    <div class="card-container" data-step="4" style="display:none">
-      <div class="stark-card instruction">
-        <p><span class="drop-cap">N</span>ow that you have a few <span class="annotate">experience points</span> under your belt, we can get you to a course.</p>
+              </ul><span class="annotate">experience points</span> under your belt, we can get you to a course.</p>
 
-        <p>The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
-        <div class="ui basic teal button next-step"> Let's begin!</div>
+            <p>The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
+            <div class="ui basic teal button next-step"> Let's begin!</div>
+          </div>
+        </div>
+        
+        <div style="height:150px"></div>
       </div>
     </div>
 
-    <div class="card-container" data-step="4" style="display:none">
-      <div class="stark-card instruction">
-        <p><span class="drop-cap">T</span>he top bar will always display a quick reference to handy infos such as
 
-          <ul>
-            <li>Course Name</li>
-            <li>Course Difficulty</li>
-            <li>Required Hardware</li>
-            <li>Duration</li>
-
-          </ul><span class="annotate">experience points</span> under your belt, we can get you to a course.</p>
-
-        <p>The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
-        <div class="ui basic teal button next-step"> Let's begin!</div>
-      </div>
-    </div>
-    
-    <div style="height:400px; width:100%">
-    </div>
   </div>
-</div>
-
-
-</div>
 <%= erb (:'partials/code_editor') %>
 </body>
 <% end %>

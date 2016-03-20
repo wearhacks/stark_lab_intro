@@ -1,4 +1,4 @@
-function Timeline(steps) {
+function Timeline(chapters) {
     var self = this;
 
     var current = 0;
@@ -10,15 +10,19 @@ function Timeline(steps) {
     var startingPointY = 20;
     var stroke = 5;
     var circleFill = "#02BAD8";
-    var totalSteps = Object.keys(steps).length;
+    var totalChapters = Object.keys(chapters).length;
     var s = Snap("#timeline");
     var groups = {}
     var line = null;
-    self.nextStep = function() {
-        console.log("next step");
+
+    self.getCurrentStep = function() {
+        return chapters[Object.keys(chapters)[current]];
+    };
+
+    self.nextChapter = function() {
         var curr = groups[current];
         var next = groups[current + 1];
-        var remaining = totalSteps - current - 1;
+        var remaining = totalChapters - current - 1;
         curr.select("circle.progress").animate({strokeWidth:0},400);
         curr.select("path.checkmark").animate({strokeDashoffset:0},300);
         
@@ -35,7 +39,7 @@ function Timeline(steps) {
     };
 
 
-    self.createStep  = function(step, stepText, completed) {
+    self.createChapter  = function(step, stepText, completed) {
         var c2 = s.circle(radius+ stroke, radius+ stroke, radius)
         .addClass("progress")
         .attr({
@@ -77,16 +81,16 @@ function Timeline(steps) {
 
     self.initProgressLine = function(paper) {
         line = paper
-         .line(startingPointX+radius+stroke, startingPointY + radius + stroke, startingPointX+radius+stroke, totalSteps * ( 2*stroke+seperation))
+         .line(startingPointX+radius+stroke, startingPointY + radius + stroke, startingPointX+radius+stroke, totalChapters * ( 2*stroke+seperation))
          .attr({
             stroke: "white",
-            strokeDasharray:totalSteps * seperation ,
-            strokeDashoffset:(totalSteps - current) * seperation,
+            strokeDasharray:totalChapters * seperation ,
+            strokeDashoffset:(totalChapters - current) * seperation,
             strokeWidth:"3"
          });
 
-        $.each(Object.keys(steps), function(i, step) { 
-            groups[i] = self.createStep(i, step, steps[step]);
+        $.each(Object.keys(chapters), function(i, chapter) { 
+            groups[i] = self.createChapter(i, chapter, chapters[chapter].completed);
             groups[i].attr({
                 transform: Snap.format("translate({x} {y})", {x:startingPointX,y:seperation*i + startingPointY })
             })
