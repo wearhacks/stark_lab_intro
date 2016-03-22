@@ -15,9 +15,9 @@ $(document).ready(function(){
     //create space (->block)
     $next_step.css({opacity:0, display:"block"});
     //scroll down, with newly created space
-    console.log( $(".course-content")[0].scrollHeight)
+    console.log( $(".chapter-content")[0].scrollHeight)
     console.log($next_step.offset().top)
-    $(".course-content").scrollTo($next_step, {offsetTop : '100'});
+    $(".chapter-content").scrollTo($next_step, {offsetTop : '100'});
     //show new card
     setTimeout(
       function(){
@@ -88,7 +88,7 @@ $(document).ready(function(){
 <div class="steps row" >  
 
 
-  <div class="course-content">
+  <div class="chapter-content">
     <div class="card-container" data-step="0">
       <div class="stark-card instruction">
 
@@ -120,51 +120,7 @@ $(document).ready(function(){
       </div>
     </div>
     
-    <div class="card-container" data-step="2" style="display:none">
-      <div class="stark-card instruction">
-        <h2>Welcome</h2>
-        <p>Welcome to Stark! This is a stark card. This is our nifty tool for that teachers will use to provide you with digestible chunks of information.</p>
-        <div class="ui basic teal button next-step"> Gotcha!</div>
-      </div>
-    </div>
-    
-    <div class="card-container" data-step="3" style="display:none">
-      <div class="stark-card question">
-
-        <h2>Quiz Arduino Basics</h2>
-        <span class="ui label points right teal">+200</span>
-        <p>If you answer the following questions 4+4 is:</p>
-        <div class="ui segment form basic clearing">
-
-           <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>8</label>
-            </div>
-
-
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-
-              <label>8</label>
-            </div>
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>3</label>
-            </div>
-            <div class="ui radio checkbox"><input type="radio" name="radio">
-              <label>5</label>
-            </div>
-        </div>
-        <div class="ui basic teal button next-step"> Submit</div>
-          
-      </div>
-      <div class="hint" style="display:none">
-          Select an answer and try again!
-      <div class="ui button">
-        <i class="checkmark icon"></i>
-        Yes
-      </div>
-      </div>
-    </div>
-    
-    <div style="height:400px; width:100%">
+    <div style="height:150px; width:100%">
     </div>
   </div>
 </div>

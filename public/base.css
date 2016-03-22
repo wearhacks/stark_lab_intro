@@ -191,7 +191,7 @@ float:left;
       background-color: #e03997;
   }
   .card-container {
-    margin-top:12em;
+    margin-top:150px;
     margin-left:auto;
     margin-right: auto;
     width: 580px;
@@ -208,11 +208,13 @@ float:left;
     font-size: 1.2em;
     width: 69px;
 }
+
 .chapter-progress {
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 61%, #2cb5e8 75%);
   height:4px;
   width: 
 }
+
 .hint {
     background: #F9F9F9;
     text-align: center;
@@ -223,10 +225,11 @@ float:left;
     color: #757575;
     box-shadow: 0px 12px 57px rgba(204, 204, 204, 0.5)
 }
-.course-content {
+.chapter-content {
   height: 100vh;
   overflow-y: scroll;
   z-index: 0;
+  padding-bottom: 150px;
 }
 /* line 16, /Users/nadim54321/Sites/stark/app/assets/stylesheets/tutorial.scss */
 .item.user-profile {
@@ -267,6 +270,7 @@ float:left;
   margin-top: 1px;
   margin-left: 1px;
   border: 1px solid rgba(255, 255, 255, 0.41);
+  overflow: hidden;
 
 }
 
@@ -517,6 +521,12 @@ body {
   font-size: 12px;
   margin:0;
 
+}
+.confirmation {
+      font-size: 4em !important;
+    display: block !important;
+    margin: auto !important;
+    color: #00B5AD;
 }
 .course-details{
     padding-left: 33px;

@@ -41,14 +41,7 @@ class SinatraApp < Sinatra::Base
     erb :intro
 
   end
-#  get '/' do
-#    erb "
-#    
-#    <a href='http://localhost:9292/auth/facebook'>Login with Facebook</a><br>
-#    <a href='http://localhost:9292/auth/twitter'>Login with twitter</a><br>
-#    <a href='http://localhost:9292/auth/att-foundry'>Login with att-foundry</a>"
-#  end
-  
+
   get '/auth/:provider/callback' do
     user = User.first(:email => request.env['omniauth.auth']['info']['email'])
     if !user

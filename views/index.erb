@@ -12,33 +12,36 @@ $(document).ready(function(){
     $(this).parent().slideToggle(500);
   });
 
-  var chapter_height = $('.card-container')
-    .map(function(i,el){
-      return $(el).outerHeight(true);
-    })
-    .toArray()
-    .reduce(function(a,b){ 
-      return a+b
-    }, 0) + 150 - $( ".course-content").height();
 
+
+  var current_chapter = 0;
+  var current_step_glob = 0;
   var course_scroll = function() {
-    console.log("hello");
-    var scrollbottom = $( ".course-content").scrollTop() ;
+    var $chapter = $('.chapter-content[data-chapter="'+current_chapter+'"]');
+    var chapter_height =$chapter.find('.card-container')
+      .map(function(i,el){
+        return $(el).outerHeight(true);
+      })
+      .toArray()
+      .reduce(function(a,b){ 
+        return a+b
+      }, 0) - $chapter.height();
+    var scrollbottom = $chapter.scrollTop() ;
     var width = (scrollbottom*100)/(chapter_height);
     width = Math.min(width, 100);
     $('.chapter-progress').animate({width:width + "%"}, 0);
   };
   course_scroll();
-  $( ".course-content" ).scroll(course_scroll);
+  $( ".chapter-content" ).scroll(course_scroll);
 
-  var steps = {
+  var chapters = {
       "Interface Introduction":{ completed: false, cards:5 }, 
-      "Connecting the Arduino":{ completed: false, cards:0 }, 
+      "Working with the Arduino":{ completed: false, cards:0 }, 
       "Intro Quiz":{ completed: false, cards:0 },
       "Start a new course":{ completed: false, cards:0 },
       "Course levels":{ completed: false, cards:0 },
   }
-  var timeline = new Timeline(steps);
+  var timeline = new Timeline(chapters);
   var custom_step_functions = {
     0 : function(step) {
             //extra animation
@@ -62,23 +65,46 @@ $(document).ready(function(){
     3: function($step) {
        
 
-      /*
-      $('.content-container').toggleClass('initial');
-      $('#editor-column').css({display:"block"});
-     */
+      
     }, 
     4: function() {
 
     },
     5:function() {
 
+    },
+    11:function() {
+      setTimeout(function() {
+        $('#arduino-dimmer').animate({opacity:0});
+        new Bounce().scale({
+          delay:0,
+          duration:1500,
+          bounces:10,
+          from: { x: 0.2, y: 0.2},
+          to: { x: 1, y: 1 },
+        }).applyTo($('#arduino-connected'))
+        $('#arduino-connected').delay(500).toggleClass('confirmation');
+        current_step_glob += 1
+        setTimeout(function() {
+          go_to_next(current_step_glob - 1, current_step_glob);
+
+        }, 500);
+
+      }, 2500);
+
     }
 
   }
-  var current_step = 1
+  var custom_chapter_ftn = {
+    1 : function(chapter) {
+      $('.course-tags').fadeIn();
+    }
+  }
   var go_to_next = function(current_step, next_step) {
-    var $current_step = $(".card-container[data-step='" + current_step + "']");
-    var $next_step = $(".card-container[data-step='" + next_step + "']");
+    mixpanel.track("Go to next card", {'current': current_step, 'next': next_step});
+    var $chapter = $('.chapter-content[data-chapter="'+current_chapter+'"]');
+    var $current_step = $chapter.find(".card-container[data-step='" + current_step + "']");
+    var $next_step = $chapter.find(".card-container[data-step='" + next_step + "']");
     $current_step.find(".stark-card").toggleClass('completed');
 
 
@@ -87,9 +113,9 @@ $(document).ready(function(){
     //create space (->block)
     $next_step.css({opacity:0, display:"block"});
     //scroll down, with newly created space
-    console.log( $(".course-content")[0].scrollHeight)
+    console.log( $(".chapter-content")[0].scrollHeight)
     console.log($next_step.offset().top)
-    $(".course-content").scrollTo($next_step, {offsetTop : '100'});
+    $(".chapter-content").scrollTo($next_step, {offsetTop : '100'});
     //show new card
     setTimeout(
       function(){
@@ -117,7 +143,7 @@ $(document).ready(function(){
     $(this).toggleClass('disabled');
     var current_step = parseInt($(this).closest('.card-container').data('step'));
     var next_step = current_step + 1;
-    
+    current_step_glob = next_step;
     go_to_next(current_step, next_step);
   });
 
@@ -141,20 +167,37 @@ $(document).ready(function(){
       $hint.css({opacity:1});
     }
     else {
-      $(this).animate({width:"37", padding:"0", height:"37" },500);
-      $(this).find('span').fadeOut(function(){
-        $(this).html('<i class="ui icon check" style="font-size:1.2em; float:left; margin-left:10px; margin-top:12px;"></i>')
-      }).fadeIn();
-
-      setTimeout(function() {
-
-        $(this).toggleClass('disabled');       
-       },1000);
+      var $hint = $current_card.find('.hint');
+      $hint.html("<p style='line-height:2em'>Great you're a sharp one aren't you!<i class='ui icon check' style='margin-left:10px;'></i> </p>").css({background:"#1DC6D5", color:"white", opacity: 0, display:"block"})
+      new Bounce().translate({
+        delay:0,
+        duration:1500,
+        bounces:10,
+        from: { x: 0, y: -50},
+        to: { x: 0, y: 0 },
+      }).applyTo($hint); 
+      $hint.css({opacity:1});
+      $(this).toggleClass('disabled');   
        setTimeout(function() {
+
         go_to_next(current_step, next_step);
 
-       },2500);
+       },1400);
     }
+  });
+  
+  $('.next-chapter').on('click', function() {
+    var $current_chapter = $(this).closest('.chapter-content');
+    current_chapter = parseInt($current_chapter.data('chapter')) + 1
+    var $next_chapter = $('.chapter-content[data-chapter="'+(current_chapter)+'"')
+    $current_chapter.fadeOut(400);
+    $next_chapter.delay(400).fadeIn(500);
+    course_scroll();
+    $('.progress-column .user-profile .progress').animate({width:20},1000);
+    timeline.nextChapter();
+    $('#course-menu h2').text(Object.keys(chapters)[current_chapter]);
+    if(custom_chapter_ftn[current_chapter])
+      custom_chapter_ftn[current_chapter]();
   });
 
 
@@ -234,7 +277,7 @@ $(document).ready(function(){
     <div class="steps row" >  
 
 
-      <div class="course-content">
+      <div data-chapter="0" class="chapter-content">
         <div class="chapter-title">Introduction</div>
         <div class="card-container" data-step="0" >
           <div class="stark-card instruction">
@@ -363,11 +406,11 @@ $(document).ready(function(){
               
           </div>
           <div class="hint" style="display:none">
-              Select an answer before submitting!
-          <div class="ui button">
-            <i class="checkmark icon"></i>
-            Ok
-          </div>
+            Select an answer before submitting!
+            <div class="ui button">
+              <i class="checkmark icon"></i>
+              Ok
+            </div>
           </div>
         </div>
 
@@ -399,10 +442,86 @@ $(document).ready(function(){
             <div class="ui basic teal button next-step"> Let's begin!</div>
           </div>
         </div>
+        <div class="card-container" data-step="6"  style="display:none;">
+          <div class="stark-card instruction">
+            <div class="ui center aligned segment basic">
+               <img src="/svgs/Medal.svg" width="150" alt="">
+              <h4>
+           Congratulations! You completed the introduction chapter on Stark.</h4>
+           <p>
+              Your current <span class="annotate">chapter</span> will always be displayed on the left. <br>
+            Everytime you complete a chapter, you will also gain experience <span class="annotate"> points</span> that levels you up.
+            <br>
+            Since that's out of the way, let's do something fun!
+          </p>
+            </div>
+            
+
+            <p></p>
+            <div class="ui basic teal button next-chapter"> Continue</div>
+          </div>
+        </div>
         
-        <div style="height:150px"></div>
+      </div>
+      
+      <div data-chapter="1" class="chapter-content" style="display:none">
+        <div class="chapter-title">Chapter 2: Connecting an Arduino</div>
+        <div class="card-container" data-step="10">
+          <div class="stark-card instruction">
+            <div class="ui center aligned segment basic">
+               <img src="/svgs/Checklist.svg" alt="">
+            </div>
+            <p><span class="drop-cap">T</span>he top bar will always display a quick reference to handy infos such as
+
+              <ul>
+                <li>Course Name</li>
+                <li>Course Difficulty</li>
+                <li>Required Hardware</li>
+                <li>Duration</li>
+
+              </ul>
+              The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
+            <div class="ui basic teal button next-step"> Let's begin!</div>
+          </div>
+        </div>
+         <div class="card-container" data-step="11" style="display:none;">
+          <div class="stark-card instruction">
+
+            <p><span class="drop-cap">F</span>irst thing first, connect your Arduino to the computer.
+
+             <img src="/svgs/usb_computer.svg" alt="">
+            
+            <p>Once you connect, we will automatically move to the next step</p>
+            <div  class="ui segment basic" style="height:0">
+              <i id="arduino-connected" class="ui icon check circle" style="display:none;"></i>
+              <div id="arduino-dimmer" class="ui active inverted dimmer">
+                <div class="ui text loader">Waiting for Arduino...</div>
+              </div>
+             
+            </div>
+            
+          </div>
+        </div>
+        <div class="card-container" data-step="12" style="display:none;">
+          <div class="stark-card instruction">
+                      
+            <p><span class="drop-cap">T</span>he top bar will always display a quick reference to handy infos such as
+
+              <ul>
+                <li>Course Name</li>
+                <li>Course Difficulty</li>
+                <li>Required Hardware</li>
+                <li>Duration</li>
+
+              </ul><span class="annotate">experience points</span> under your belt, we can get you to a course.</p>
+
+            <p>The upcoming course will guide through basics of circuits and blinking an led on an arduino. Once you have your arduino ready, we'll be ready to start.</p>
+            <div class="ui basic teal button next-step"> Let's begin!</div>
+          </div>
+        </div>
       </div>
     </div>
+
 
 
   </div>
