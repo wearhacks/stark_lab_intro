@@ -101,7 +101,6 @@ $(document).ready(function(){
     }
   }
   var go_to_next = function(current_step, next_step) {
-    mixpanel.track("Go to next card", {'current': current_step, 'next': next_step});
     var $chapter = $('.chapter-content[data-chapter="'+current_chapter+'"]');
     var $current_step = $chapter.find(".card-container[data-step='" + current_step + "']");
     var $next_step = $chapter.find(".card-container[data-step='" + next_step + "']");
